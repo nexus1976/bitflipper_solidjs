@@ -1,21 +1,13 @@
 import type { Component } from 'solid-js';
 import { createSignal, For } from 'solid-js';
+import { BitnessSelector } from './components/BitnessSelector';
+import { SlideToggle } from './components/SlideToggle';
+import { BitnessEnum } from './enums';
 import styles from './App.module.css';
-
-interface IBitnessValueObject {
-	bitnessValue: BitnessEnum,
-	bitnessDisplay: string
-}
-declare enum BitnessEnum {
-	Bitness8 = 0,
-	Bitness16 = 1,
-	Bitness32 = 2,
-	Bitness64 = 3
-}
 
 const App: Component = () => {
   const [currentBitness, setCurrentBitness] = createSignal(BitnessEnum.Bitness8);
-	const [bitnessValues, setBitnessValues] = createSignal(new Array<IBitnessValueObject>);
+  const [bitMap, setBitMap] = createSignal(new Array<IBitValueObject>());
   
   const getMaxBitPositions = (bitness: BitnessEnum): Number => {
     switch (bitness) {
@@ -31,42 +23,38 @@ const App: Component = () => {
         return 8;
     }
   };
-  const hydrateBitnessValues = (): void => {
-    const bvs = new Array<IBitnessValueObject>();
-    bvs.push({
-      bitnessValue: BitnessEnum.Bitness8,
-      bitnessDisplay: "8 bits"
-    });
-    bvs.push({
-      bitnessValue: BitnessEnum.Bitness16,
-      bitnessDisplay: "16 bits"
-    });
-    bvs.push({
-      bitnessValue: BitnessEnum.Bitness32,
-      bitnessDisplay: "32 bits"
-    });
-    setBitnessValues(bvs);
-    // saving 64 bits for later
-    // this.bitnessValues.push({
-    //   bitnessValue: BitnessEnum.Bitness64,
-    //   bitnessDisplay: "64 bits"
-    // });        
-  }
-  const bitnessChange = (e): void => {
-    console.log(e.currentTarget.value);
+  const hydrateBitMap = (bitnessEnum: BitnessEnum): void => {
+    console.log('hydrateBitMap called');
+    const bitArray: Array<IBitValueObject> = new Array<IBitValueObject>();
+    let maxBitPositions: Number = getMaxBitPositions(bitnessEnum);
+    let currentBitPos: number = 1;
+    for (let index = 0; index < maxBitPositions; index++) {
+      const el: IBitValueObject = {
+        bitPos: currentBitPos,
+        bitValue: false
+      };
+      bitArray.push(el);
+      currentBitPos = currentBitPos * 2;
+    }
+    bitArray.sort((a, b) => b.bitPos - a.bitPos);
+    setBitMap(bitArray);
   };
+  
+  hydrateBitMap(currentBitness());
+  
   return (
     <div class={styles.App}>
       <div>
-        <span class='bit-flip-bitness'>
-          <label><b>Bitness: </b></label>
-          <select name='bitness' id='bitness' value={currentBitness()} onchange={bitnessChange}>
-            <For each={bitnessValues()} fallback={<div>Loading...</div>}>
-              {(item) => <option value={item.bitnessValue}>{item.bitnessDisplay}</option>}
-            </For>
-          </select>
-        </span>
+        <BitnessSelector bitness={currentBitness} setBitness={setCurrentBitness} />
       </div>
+      <br />
+      <span class={styles.bitfliphorizontal}>
+        <For each={bitMap()}>
+          {(item, index) => (
+            <SlideToggle index={index} bitValue={item} />
+          )}
+        </For>
+      </span>
     </div>
   );
 };
