@@ -1,9 +1,10 @@
 import { For } from 'solid-js';
-import { BitnessEnum } from '../enums';
+import { BitnessEnum, ConverToBitnessEnum } from '../enums';
 
 export function BitnessSelector(props: any) {
 	const bitnessChange = (e: any): void => {
-		props.setBitness(e.currentTarget.value);
+		const newEnumValue = ConverToBitnessEnum(e.currentTarget.value);
+		props.setBitness(newEnumValue);
 	};	
 
 	const bvos: IBitnessValueObject[] = [

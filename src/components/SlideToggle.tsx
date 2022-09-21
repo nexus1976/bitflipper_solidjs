@@ -1,18 +1,20 @@
 import { createSignal } from 'solid-js';
+import styles from './SlideToggle.module.css';
 
 export function SlideToggle(props: any) {
 	const [getChecked, setChecked] = createSignal(false);
 	const bitFlipped = (e: any): void => {
-		console.log('bit flipped!', props);
 		setChecked(!getChecked());
+		props.bitValue.bitValue = getChecked();
+		console.log('bit flipped!', props);
 	};
 	return (
-		<div class='slide-toggle'>
-			<label class='slide-toggle-label' for={'slide-toggle-input-' + props.index}>
-				<span class='slide-toggle-bar'>
+		<div class={styles.slidetoggle}>
+			<label class={styles.slidetogglelabel} for={'slide-toggle-input-' + props.index}>
+				<span class={styles.slidetogglebar} classList={{ [styles.checked]: getChecked()}}>
 					<input 
 						id={'slide-toggle-input-' + props.index} 
-						class='slide-toggle-input' 
+						class={styles.slidetoggleinput} 
 						type='checkbox' 
 						role='switch' 
 						tabIndex={0} 
@@ -20,8 +22,11 @@ export function SlideToggle(props: any) {
 						onClick={bitFlipped}
 					>
 					</input>
-					<span class='slide-toggle-thumb-container'>
-						<span class='slide-toggle-thumb'></span>
+					<span class={styles.slidetogglethumbcontainer}>
+						<span class={styles.slidetogglethumb}></span>
+						<span class={styles.slidetogglefocusindicator}>
+							<span class={styles.slidetogglepersistentripple}></span>
+						</span>
 					</span>
 				</span>
 			</label>
