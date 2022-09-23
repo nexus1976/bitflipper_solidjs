@@ -1,12 +1,13 @@
-.slidetoggle {
+.slide-toggle {
 	display: inline-block;
 	height: 24px;
 	max-width: 100%;
 	line-height: 24px;
 	white-space: nowrap;
 	outline: none;
+	padding-left: 12px;
 }
-.slidetogglelabel {
+.slide-toggle-label {
 	user-select: none;
 	display: flex;
 	flex: 1;
@@ -14,8 +15,10 @@
 	align-items: center;
 	height: inherit;
 	cursor: pointer;
+	text-align: center;
+	vertical-align: text-top;
 }
-.slidetogglebar {
+.slide-toggle-bar {
 	-moz-transform: rotate(90deg);
 	transform: rotate(90deg);
 	transition: all 80ms linear;
@@ -33,11 +36,11 @@
 	line-height: 24px;
 	white-space: nowrap;
 }
-.slidetogglebar .checked {
+.checked .slide-toggle-bar {
 	background-color: #183f1b80;
 }
 
-.slidetoggleinput {
+.slide-toggle-input {
 	bottom: 0;
 	left: 10px;
 	border: 0;
@@ -54,7 +57,7 @@
 	cursor: pointer;
 	line-height: 24px;
 }
-.slidetogglethumbcontainer {
+.slide-toggle-thumb-container {
 	position: absolute;
 	z-index: 1;
 	width: 20px;
@@ -68,11 +71,11 @@
 	line-height: 24px;
 	white-space: nowrap;
 }
-.slidetogglethumbcontainer .checked {
+.checked .slide-toggle-thumb-container {
 	transform: translate3d(16px, 0, 0);
 }
 
-.slidetogglethumb {
+.slide-toggle-thumb {
 	transition: all 80ms linear;
 	transition-property: background-color;
 	transition-delay: 50ms;
@@ -86,11 +89,11 @@
 	line-height: 24px;
 	white-space: nowrap;
 }
-.slidetogglethumb .checked {
+.checked .slide-toggle-thumb {
 	background-color: #104e10;	
 }
 
-.slidetogglefocusindicator {
+.slide-toggle-focus-indicator {
 	position: absolute;
 	top: calc(50% - 20px);
 	left: calc(50%-20px);
@@ -104,7 +107,7 @@
 	line-height: 24px;
 	white-space: nowrap;
 }
-.slidetogglepersistentripple {
+.slide-toggle-persistent-ripple {
 	background-color: #000;
 	opacity: 0;
 	width: 100%;
@@ -118,6 +121,39 @@
 	line-height: 24px;
 	white-space: nowrap;
 }
-.slidetogglepersistentripple .checked {
+.checked .slide-toggle-persistent-ripple {
 	background-color: #104e10;
+}
+.slide-toggle-pos-label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 11px;
+	text-align: center;
+}
+.bit-flip-single-digit {
+	margin-left: 8px;
+}
+.bit-flip-double-digit {
+	margin-left: 8px;
+}
+.bit-flip-triple-digit {
+	margin-left: 8px;
+}
+.bit-flip-four-digit {
+	margin-left: 8px;
+}
+.bit-flip-five-digit {
+	margin-left: 8px;
+}
+.bit-flip-big-digit {
+	margin-left: 8px;
+	font-size: 8px;
+	padding-bottom: 4px;
+	font-weight: bold;
+}
+
+.slide-toggle-bit-label {
+	display: block;
+	padding-left: 25px;
+	padding-top: 4px;
 }

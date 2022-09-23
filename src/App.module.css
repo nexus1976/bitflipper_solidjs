@@ -9,3 +9,7 @@
 .bitfliphorizontal {
   display: inline-flex;
 }
+
+.bitslabel {
+  font-weight: bold;
+}

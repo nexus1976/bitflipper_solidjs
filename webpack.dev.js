@@ -17,7 +17,8 @@ module.exports = merge(common, {
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, 'src', 'index.html'),
 			pkgVersion,
-			filename: 'index.html'
+			filename: 'index.html',
+			favicon: './src/assets/favicon.ico'
 		}),
 		new webpack.optimize.LimitChunkCountPlugin({
 		  maxChunks: 1 // disable creating additional chunks

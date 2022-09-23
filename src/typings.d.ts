@@ -1,10 +1,6 @@
 declare module '*.css';
 declare module '*.svg';
 
-interface IBitValueObject {
-	bitPos: number,
-	bitValue: boolean
-}
 interface IBitnessValueObject {
 	bitnessValue: BitnessEnum,
 	bitnessDisplay: string

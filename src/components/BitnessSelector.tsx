@@ -24,13 +24,13 @@ export function BitnessSelector(props: any) {
 	
 	return (
 		<>
-			<span class='bit-flip-bitness'>
-			<label><b>Bitness: </b></label>
-			<select name='bitness' id='bitness' value={props.bitness()} onchange={bitnessChange}>
-				<For each={bvos} fallback={<div>Loading...</div>}>
-					{(item) => <option value={item.bitnessValue}>{item.bitnessDisplay}</option>}
-				</For>
-			</select>
+			<span class='bit-flip-bitness-selector'>
+				<label><b>Bitness: </b></label>
+				<select name='bitness' id='bitness' value={props.bitness()} onchange={bitnessChange}>
+					<For each={bvos} fallback={<div>Loading...</div>}>
+						{(item) => <option value={item.bitnessValue}>{item.bitnessDisplay}</option>}
+					</For>
+				</select>
 			</span>		
 		</>
 	)
