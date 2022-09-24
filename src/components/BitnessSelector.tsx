@@ -1,6 +1,11 @@
 import { For } from 'solid-js';
 import { BitnessEnum, ConverToBitnessEnum } from '../enums';
 
+export interface IBitnessValueObject {
+	bitnessValue: BitnessEnum,
+	bitnessDisplay: string
+}
+
 export function BitnessSelector(props: any) {
 	const bitnessChange = (e: any): void => {
 		const newEnumValue = ConverToBitnessEnum(e.currentTarget.value);

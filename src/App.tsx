@@ -3,12 +3,14 @@ import { createSignal, createEffect, For } from 'solid-js';
 import { BitnessSelector } from './components/BitnessSelector';
 import { SlideToggle, IBitValueObject } from './components/SlideToggle';
 import { BitnessEnum, ConvertToNumber } from './enums';
-import styles from './App.module.css';
+import styles from './App.css';
 
 const App: Component = () => {
   const [currentBitness, setCurrentBitness] = createSignal(BitnessEnum.Bitness8);
   const [bitMap, setBitMap] = createSignal(new Array<IBitValueObject>());
   const [bitsValue, setBitsValue] = createSignal('');
+  const [decimalValue, setDecimalValue] = createSignal(0);
+  const [hexValue, setHexValue] = createSignal('0');
   
   const hydrateBitMap = (bitnessEnum: BitnessEnum): void => {
     const bitArray: Array<IBitValueObject> = new Array<IBitValueObject>();
@@ -32,9 +34,66 @@ const App: Component = () => {
     }
     setBitsValue(bitValue);
   };
+  const hydrateDecimalValue = (arr: Array<IBitValueObject>): void => {
+    let decimalValue = 0;
+    for (let index = 0; index < arr.length; index++) {
+      if (arr[index].bitValue) {
+        decimalValue += arr[index].bitPos;
+      }
+    }
+    setDecimalValue(decimalValue);
+  };
+  const hydrateHexValue = (nbr: number): void => {
+    let newHexValue = '';
+    if (nbr === 0)
+    {
+      newHexValue = '0';
+    } else {
+      let keepProcessing = true;
+      while (keepProcessing) {
+        const newNbr = Math.trunc(nbr / 16);
+        const remainder = nbr % 16;
+        nbr = newNbr;
+        newHexValue += getHexDigit(remainder);
+        if (nbr === 0 && remainder === 0) {
+          keepProcessing = false;
+        }
+      }
+      newHexValue = newHexValue.split('').reverse().join('').replace(/^0+/, '');
+    }
+    setHexValue(newHexValue);
+  };
+  const getHexDigit = (decDigit: number): string => {
+    if (decDigit < 10) {
+      return decDigit.toString();
+    }
+    switch (decDigit) {
+      case 10:
+        return 'A';
+      case 11:
+        return 'B';
+      case 12:
+        return 'C';
+      case 13:
+        return 'D';
+      case 14:
+        return 'E';
+      case 15:
+        return 'F';
+      default:
+        return '';
+    }
+  }
+  const bitValueChanged = (e: IBitValueObject): void => {
+    hydrateBitsValue(bitMap());
+    hydrateDecimalValue(bitMap());
+    hydrateHexValue(decimalValue());
+  };
   
   createEffect(() => hydrateBitMap(currentBitness()));
   createEffect(() => hydrateBitsValue(bitMap()));
+  createEffect(() => hydrateDecimalValue(bitMap()));
+  createEffect(() => hydrateHexValue(decimalValue()));
   
   return (
     <div class={styles.App}>
@@ -45,7 +104,7 @@ const App: Component = () => {
       <span class={styles.bitfliphorizontal}>
         <For each={bitMap()}>
           {(item, index) => (
-            <SlideToggle index={index()} componentData={item} />
+            <SlideToggle index={index()} componentData={item} changeEvent={bitValueChanged} />
           )}
         </For>
       </span>
@@ -53,9 +112,9 @@ const App: Component = () => {
       <br />
       <span><label class={styles.bitslabel}>Bits: </label>{bitsValue()}</span>
       <br />
-      <label class={styles.bitslabel}>Decimal Value: </label>
+      <span><label class={styles.bitslabel}>Decimal Value: </label>{decimalValue()}</span>
       <br />
-      <label class={styles.bitslabel}>Hexadecimal Value: </label>
+      <span><label class={styles.bitslabel}>Hexadecimal Value: </label>{hexValue()}</span>
       <br />            
     </div>
   );

@@ -3,7 +3,8 @@ import './SlideToggle.css';
 
 export interface ISlideToggleProps {
 	index: number,
-	componentData: IBitValueObject
+	componentData: IBitValueObject,
+	changeEvent: (componentData: IBitValueObject) => void
 }
 export interface IBitValueObject {
 	bitPos: number,
@@ -31,11 +32,13 @@ export function SlideToggle(props: ISlideToggleProps) {
 	const bitFlipped = (e: any): void => {
 		setChecked(!getChecked());
 		props.componentData.bitValue = getChecked();
-		console.log('bit flipped!', props);
+		props.changeEvent(props.componentData);
 	};
 	return (
 		<div class='slide-toggle-container'>
-			<label class={'slide-toggle-pos-label' + ' ' + getLabelClass(props.componentData.bitPos)}>{props.componentData.bitPos.toString()}</label>
+			<label class={'slide-toggle-pos-label' + ' ' + getLabelClass(props.componentData.bitPos)}>
+				{props.componentData.bitPos.toString()}
+			</label>
 			<div class='slide-toggle' classList={{ ['checked']: getChecked()}}>
 				<label class='slide-toggle-label' for={'slide-toggle-input-' + props.index}>
 					<span class='slide-toggle-bar'>
