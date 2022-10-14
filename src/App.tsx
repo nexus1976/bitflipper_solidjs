@@ -3,7 +3,7 @@ import { createSignal, createEffect, For } from 'solid-js';
 import { BitnessSelector } from './components/BitnessSelector';
 import { SlideToggle, IBitValueObject } from './components/SlideToggle';
 import { BitnessEnum, ConvertToNumber } from './enums';
-import styles from './App.css';
+import './App.css';
 
 const App: Component = () => {
   const [currentBitness, setCurrentBitness] = createSignal(BitnessEnum.Bitness8);
@@ -96,12 +96,12 @@ const App: Component = () => {
   createEffect(() => hydrateHexValue(decimalValue()));
   
   return (
-    <div class={styles.App}>
+    <div class={'App'}>
       <div>
         <BitnessSelector bitness={currentBitness} setBitness={setCurrentBitness} />
       </div>
       <br />
-      <span class={styles.bitfliphorizontal}>
+      <span class={'bitfliphorizontal'}>
         <For each={bitMap()}>
           {(item, index) => (
             <SlideToggle index={index()} componentData={item} changeEvent={bitValueChanged} />
@@ -110,11 +110,11 @@ const App: Component = () => {
       </span>
       <br />
       <br />
-      <span><label class={styles.bitslabel}>Bits: </label>{bitsValue()}</span>
+      <span><label class={'bitslabel'}>Bits: </label>{bitsValue()}</span>
       <br />
-      <span><label class={styles.bitslabel}>Decimal Value: </label>{decimalValue()}</span>
+      <span><label class={'bitslabel'}>Decimal Value: </label>{decimalValue()}</span>
       <br />
-      <span><label class={styles.bitslabel}>Hexadecimal Value: </label>{hexValue()}</span>
+      <span><label class={'bitslabel'}>Hexadecimal Value: </label>{hexValue()}</span>
       <br />            
     </div>
   );

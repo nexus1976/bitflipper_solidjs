@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  bitflipper:
+    image: bitflipper
+    container_name: bitflipper
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8089:80"
